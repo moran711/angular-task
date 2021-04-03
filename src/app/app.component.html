@@ -1,0 +1,13 @@
+<app-header></app-header>
+<mat-sidenav-container>
+  <mat-sidenav
+    mode="side"
+    opened
+    [fixedInViewport]="true"
+    [fixedTopGap]="64"
+    [fixedBottomGap]="0"
+  >
+    <app-sidenav></app-sidenav
+  ></mat-sidenav>
+  <mat-sidenav-content><router-outlet></router-outlet></mat-sidenav-content>
+</mat-sidenav-container>
