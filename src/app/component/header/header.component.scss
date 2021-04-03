@@ -1,4 +1,9 @@
-.app-header {
-  font-family: Playball;
-  font-size: 2rem;
+mat-toolbar {
+  .app-header {
+    font-family: Playball;
+    font-size: 2rem;
+  }
+  position: fixed;
+  height: 64px;
+  z-index: 99999;
 }

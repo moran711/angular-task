@@ -1,9 +1,9 @@
-import paths, { IPaths } from './paths';
-import menuItems, { IMenuItem } from './menu-items';
-import sidenavOptions, { ISidenavOptions } from './sidenav-options';
+import paths, { IPaths } from './paths.constants';
+import menuItems, { IMenuItem } from './menu-items.constants';
+import sidenavOptions, { ISidenavOptions } from './sidenav-options.constants';
 import routerLinkActiveOptions, {
   IRouterLinkActiveOptions,
-} from './router-link-active-options';
+} from './router-link-active-options.constants';
 
 interface IConfig {
   paths: IPaths;
@@ -14,8 +14,8 @@ interface IConfig {
 
 const config: IConfig = {
   paths,
-  menuItems,
-  sidenavOptions,
+  menuItems: menuItems,
+  sidenavOptions: sidenavOptions,
   routerLinkActiveOptions,
 };
 

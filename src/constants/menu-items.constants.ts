@@ -1,4 +1,4 @@
-import paths from './paths';
+import paths from './paths.constants';
 
 export interface IMenuItem {
   icon: string;

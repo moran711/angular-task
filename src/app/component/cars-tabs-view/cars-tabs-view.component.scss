@@ -1,0 +1,32 @@
+.tab-container {
+  display: grid;
+  grid-template-columns: 1fr 8fr;
+  .tab-sidenav {
+    border-bottom: 2px solid rgb(239, 239, 239);
+  }
+  .tab-container {
+    margin: 10px;
+  }
+}
+
+.tab-content {
+  margin: 10px;
+}
+
+button {
+  display: flex;
+  flex-direction: column;
+  .mat-button-wrapper {
+    .car-model {
+      font-size: 1rem;
+    }
+
+    .car-brand {
+      font-size: 0.8rem;
+    }
+  }
+
+  &.active {
+    background-color: rgb(239, 239, 239);
+  }
+}

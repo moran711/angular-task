@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import config from '../../../config';
-import { IMenuItem } from '../../../config/menu-items';
+import config from '../../../constants';
+import { IMenuItem } from '../../../constants/menu-items.constants';
 
 const { menuItems } = config;
 const routerLinkActiveOptions = { config };

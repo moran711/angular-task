@@ -1,1 +1,7 @@
-<p>cars-page works!</p>
+<mat-slide-toggle [(ngModel)]="isChecked">View by category</mat-slide-toggle>
+<div *ngIf="isChecked; else listView">
+  <app-cars-tabs-view></app-cars-tabs-view>
+</div>
+<ng-template #listView
+  ><app-cars-filter-view></app-cars-filter-view
+></ng-template>
