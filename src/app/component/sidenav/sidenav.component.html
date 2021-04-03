@@ -3,7 +3,7 @@
     *ngFor="let menuItem of menuItems"
     [routerLink]="menuItem.uri"
     routerLinkActive="active"
-    [routerLinkActiveOptions]="routerActiveOptions"
+    [routerLinkActiveOptions]="{ exact: true }"
     class="menu-item"
   >
     <div class="menu-item-content">

@@ -1,0 +1,46 @@
+<mat-tab-group
+  *ngIf="!allCarsLoading; else loadingBlock"
+  (selectedTabChange)="handleTabChange()"
+>
+  <mat-tab *ngFor="let category of carsByCategories | keyvalue">
+    <ng-template mat-tab-label>
+      {{ category.key }}
+    </ng-template>
+    <div class="tab-container">
+      <div class="tab-sidenav">
+        <mat-list role="list">
+          <mat-list-item *ngFor="let car of category.value">
+            <button
+              mat-button
+              (click)="setSelectCarId(car.id)"
+              [ngClass]="selectedCar?.id === car?.id ? 'active' : null"
+            >
+              <span class="car-model">
+                <b>{{ car?.model }}</b>
+              </span>
+              <span class="car-brand">
+                {{ car?.brand }}
+              </span>
+            </button>
+          </mat-list-item>
+        </mat-list>
+      </div>
+      <div class="tab-content">
+        <mat-progress-bar
+          *ngIf="carInfoLoading; else carInfo"
+          mode="indeterminate"
+        ></mat-progress-bar>
+        <ng-template #carInfo>
+          <app-car-info
+            [car]="selectedCar"
+            *ngIf="selectedCar; else noCarBlock"
+          ></app-car-info>
+          <ng-template #noCarBlock>Select car from list</ng-template>
+        </ng-template>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+<ng-template #loadingBlock>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</ng-template>

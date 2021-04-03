@@ -1,0 +1,10 @@
+.car-container {
+  display: flex;
+  img {
+    min-width: 250px;
+    max-width: 600px;
+  }
+  .car-info {
+    margin: 10px;
+  }
+}

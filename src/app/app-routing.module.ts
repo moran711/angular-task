@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { CarsPageComponent } from './pages/cars-page/cars-page.component';
 import { DealersPageComponent } from './pages/dealers-page/dealers-page.component';
-import config from '../config';
+import config from '../constants';
 
 const { paths } = config;
 

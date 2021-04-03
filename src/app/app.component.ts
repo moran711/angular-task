@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import sidenavOptions, { ISidenavOptions } from '../config/sidenav-options';
+import sidenavOptionsConstants, {
+  ISidenavOptions,
+} from '../constants/sidenav-options.constants';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +9,5 @@ import sidenavOptions, { ISidenavOptions } from '../config/sidenav-options';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  sidenavOptions: ISidenavOptions = sidenavOptions;
+  sidenavOptions: ISidenavOptions = sidenavOptionsConstants;
 }
