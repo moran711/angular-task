@@ -31,7 +31,7 @@ export class CarsTabsViewComponent implements OnInit, OnDestroy {
       });
   }
   ngOnDestroy(): void {
-    this.getAllCarsSubscription.unsubscribe();
+    this.getAllCarsSubscription?.unsubscribe();
   }
   setSelectedCar(category: string, id: string): void {
     this.selectedCar = this.carsByCategories[category].find(

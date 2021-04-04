@@ -1,0 +1,9 @@
+<mat-card>
+  <mat-card-header>
+    <div class="car-info">
+      <mat-card-title>{{ car.model }}</mat-card-title>
+      <mat-card-subtitle>{{ car.brand }}</mat-card-subtitle>
+    </div>
+  </mat-card-header>
+  <img mat-card-image [src]="car?.image" [alt]="car.model" />
+</mat-card>

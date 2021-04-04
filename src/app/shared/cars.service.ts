@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICar, ICarFilters } from '../../constants/data.constants';
+import { ICar } from '../../constants/data.constants';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
@@ -10,12 +10,8 @@ import { map } from 'rxjs/operators';
 export class CarsService {
   reqUri: string = 'http://localhost:4200/api/cars';
   constructor(private http: HttpClient) {}
-  getAllCars(searchString?: string): Observable<ICar[]> {
-    let uri = this.reqUri;
-    if (searchString?.trim()) {
-      uri = `${this.reqUri}/?model=${searchString}&brand=${searchString}`;
-    }
-    return this.http.get<ICar[]>(uri).pipe(
+  getAllCars(filterOptions?: any): Observable<ICar[]> {
+    return this.http.get<ICar[]>(this.reqUri, {params: filterOptions}).pipe(
       map((car) => {
         if (!car) {
           return [];
