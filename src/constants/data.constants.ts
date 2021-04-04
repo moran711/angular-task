@@ -11,6 +11,11 @@ export interface ICar {
   newItem: boolean;
 }
 
+export interface ICarFilters {
+  brand?: string[];
+  model?: string[];
+}
+
 export interface IDealer {
   id: string;
   name: string;
@@ -31,7 +36,7 @@ export const CARS: ICar[] = [
     class: 'muscle car',
     category: 'coupe',
     image: './assets/images/z28-camaro.jpg',
-    liked: false,
+    liked: true,
     newItem: false,
   },
   {

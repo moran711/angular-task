@@ -1,1 +1,43 @@
-<p>cars-filter-view works!</p>
+<mat-form-field appearance="fill">
+  <mat-label>Filter</mat-label>
+  <input
+    matInput
+    (ngModelChange)="filterOnChange($event)"
+    [formControl]="filter"
+  />
+  <button
+    mat-button
+    *ngIf="filter.value"
+    matSuffix
+    mat-icon-button
+    aria-label="Clear"
+    (click)="clearInput()"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-form-field>
+
+<ng-template #carListBlock>
+  <div class="cars-list" *ngIf="cars?.length; else noCarsBlock">
+    <app-car-card *ngFor="let car of cars" [car]="car"></app-car-card>
+  </div>
+  <button
+    mat-button
+    class="load-more-btn"
+    color=""
+    (click)="loadMoreCars()"
+    mat-raised-button
+    color="accent"
+    *ngIf="cars.length === limit"
+  >
+    Load more
+  </button>
+</ng-template>
+<ng-template #noCarsBlock>
+  <h1 class="no-cars-msg">There are no cars</h1>
+</ng-template>
+
+<mat-progress-bar
+  mode="indeterminate"
+  *ngIf="loading; else carListBlock"
+></mat-progress-bar>
