@@ -20,11 +20,14 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { InMemoryDataService } from './data-services/in-memory-data.service';
 import { CarsFilterViewComponent } from './component/cars-filter-view/cars-filter-view.component';
 import { CarsTabsViewComponent } from './component/cars-tabs-view/cars-tabs-view.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { CarInfoComponent } from './component/car-info/car-info.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { CarCardComponent } from './component/car-card/car-card.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +40,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     CarsFilterViewComponent,
     CarsTabsViewComponent,
     CarInfoComponent,
+    CarCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -53,6 +57,9 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
     MatButtonModule,
     MatCardModule,
     MatProgressBarModule,
+    MatFormFieldModule,
+    ReactiveFormsModule,
+    MatInputModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
     }),

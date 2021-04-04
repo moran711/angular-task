@@ -1,0 +1,20 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <div class="car-info">
+      <mat-card-title>{{ car.model }}</mat-card-title>
+      <mat-card-subtitle>{{ car.brand }}</mat-card-subtitle>
+    </div>
+    <mat-icon
+      aria-hidden="false"
+      *ngIf="car.liked"
+      (click)="toggleLike(car)"
+      class="like-icon"
+      >favorite</mat-icon
+    >
+  </mat-card-header>
+  <img mat-card-image [src]="car?.image" [alt]="car.model" />
+  <mat-card-actions>
+    <button mat-button (click)="toggleLike(car)" class="like-btn">Like</button>
+    <button mat-button class="details-btn">Details</button>
+  </mat-card-actions>
+</mat-card>

@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CarsService } from '../../shared/cars.service';
 import { ICar } from '../../../constants/data.constants';
 import { Subscription } from 'rxjs';
+import { MatTabChangeEvent } from '@angular/material/tabs';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-cars-tabs-view',
@@ -11,10 +13,8 @@ import { Subscription } from 'rxjs';
 export class CarsTabsViewComponent implements OnInit, OnDestroy {
   carsByCategories = {};
   allCarsLoading: boolean = false;
-  carInfoLoading: boolean = false;
   selectedCar: ICar | null = null;
   getAllCarsSubscription: Subscription | null = null;
-  getCarByIdSubscription: Subscription | null = null;
   selectedCategoryIndex = 0;
   constructor(private carsService: CarsService) {}
 
@@ -24,21 +24,27 @@ export class CarsTabsViewComponent implements OnInit, OnDestroy {
       .getAllCars()
       .subscribe((cars) => {
         this.carsByCategories = this.getCarsByCategories(cars);
+        const firstCategory = Object.keys(this.carsByCategories).sort()[0];
+        const carId = this.carsByCategories[firstCategory][0].id;
+        this.setSelectedCar(firstCategory, carId);
         this.allCarsLoading = false;
       });
   }
   ngOnDestroy(): void {
     this.getAllCarsSubscription.unsubscribe();
-    this.getCarByIdSubscription.unsubscribe();
   }
-  setSelectCarId(id: string): void {
-    this.carInfoLoading = true;
-    this.getCarByIdSubscription = this.carsService
-      .getCarById(id)
-      .subscribe((car) => {
-        this.selectedCar = car;
-        this.carInfoLoading = false;
-      });
+  setSelectedCar(category: string, id: string): void {
+    this.selectedCar = this.carsByCategories[category].find(
+      (car) => car.id === id,
+    );
+  }
+
+  checkCategoriesIsEmpty() {
+    for (var prop in this.carsByCategories) {
+      if (this.carsByCategories.hasOwnProperty(prop)) return false;
+    }
+
+    return true;
   }
 
   getCarsByCategories(cars: ICar[]) {
@@ -52,7 +58,10 @@ export class CarsTabsViewComponent implements OnInit, OnDestroy {
     }, {});
   }
 
-  handleTabChange(): void {
+  handleTabChange(event: MatTabChangeEvent): void {
     this.selectedCar = null;
+    const category = event.tab.textLabel;
+    const carId = this.carsByCategories[category][0].id;
+    this.setSelectedCar(category, carId);
   }
 }

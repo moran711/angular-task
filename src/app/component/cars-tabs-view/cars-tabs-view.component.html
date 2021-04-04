@@ -1,18 +1,21 @@
 <mat-tab-group
   *ngIf="!allCarsLoading; else loadingBlock"
-  (selectedTabChange)="handleTabChange()"
+  (selectedTabChange)="handleTabChange($event)"
+  [animationDuration]="0"
 >
-  <mat-tab *ngFor="let category of carsByCategories | keyvalue">
-    <ng-template mat-tab-label>
-      {{ category.key }}
-    </ng-template>
-    <div class="tab-container">
+  <ng-template *ngIf="checkCategoriesIsEmpty(); else tabGroup"></ng-template>
+  <mat-tab
+    *ngFor="let category of carsByCategories | keyvalue"
+    [label]="category.key"
+    #tabGroup
+  >
+    <div class="tab-container" *ngIf="category.value?.length; else noCarsBlock">
       <div class="tab-sidenav">
         <mat-list role="list">
           <mat-list-item *ngFor="let car of category.value">
             <button
               mat-button
-              (click)="setSelectCarId(car.id)"
+              (click)="setSelectedCar(car.category, car.id)"
               [ngClass]="selectedCar?.id === car?.id ? 'active' : null"
             >
               <span class="car-model">
@@ -26,19 +29,18 @@
         </mat-list>
       </div>
       <div class="tab-content">
-        <mat-progress-bar
-          *ngIf="carInfoLoading; else carInfo"
-          mode="indeterminate"
-        ></mat-progress-bar>
-        <ng-template #carInfo>
-          <app-car-info
-            [car]="selectedCar"
-            *ngIf="selectedCar; else noCarBlock"
-          ></app-car-info>
-          <ng-template #noCarBlock>Select car from list</ng-template>
-        </ng-template>
+        <app-car-info
+          [car]="selectedCar"
+          *ngIf="selectedCar; else noCarBlock"
+        ></app-car-info>
+        <ng-template #noCarBlock>Select car from list</ng-template>
       </div>
     </div>
+    <ng-template #noCarsBlock
+      ><div class="tab-container">
+        There are no cars for selected category
+      </div></ng-template
+    >
   </mat-tab>
 </mat-tab-group>
 <ng-template #loadingBlock>
