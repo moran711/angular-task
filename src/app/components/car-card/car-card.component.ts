@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { CarsService } from 'src/app/shared/cars.service';
 import { ICar } from 'src/constants/data.constants';
 
@@ -7,13 +8,16 @@ import { ICar } from 'src/constants/data.constants';
   templateUrl: './car-card.component.html',
   styleUrls: ['./car-card.component.scss'],
 })
-export class CarCardComponent implements OnInit {
+export class CarCardComponent implements OnInit, OnDestroy {
   @Input() car: ICar | null;
+  updateCarSubscription: Subscription | null = null;
   constructor(private carsService: CarsService) {}
 
   ngOnInit(): void {}
-
-  toggleLike(car: ICar) {
+  ngOnDestroy(): void {
+    this.updateCarSubscription?.unsubscribe()
+  }
+  toggleLike(car: ICar): void {
     this.carsService
       .updateCar({ ...car, liked: !car.liked })
       .subscribe((car) => {

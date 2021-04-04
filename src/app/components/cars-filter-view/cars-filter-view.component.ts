@@ -22,11 +22,11 @@ export class CarsFilterViewComponent implements OnInit, OnDestroy {
     this.getCars('');
   }
   ngOnDestroy(): void {
-    this.getAllCarsSubscriptions.forEach((sub) => sub.unsubscribe());
+    this.getAllCarsSubscriptions.forEach((sub) => sub?.unsubscribe());
   }
   getCars(searchString) {
     this.getAllCarsSubscriptions.push(
-      this.carsService.getAllCars(searchString).subscribe(
+      this.carsService.getAllCars({model: searchString, brand: searchString}).subscribe(
         (cars) => {
           this.cars = cars.slice(0, this.limit);
           this.loading = false;

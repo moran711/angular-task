@@ -49,7 +49,7 @@ export const CARS: ICar[] = [
     category: 'coupe',
     image: './assets/images/pagani-huayra.jpg',
     liked: false,
-    newItem: false,
+    newItem: true,
   },
   {
     id: '4728482911',
@@ -436,7 +436,7 @@ export const DEALERS: IDealer[] = [
     amountOfCars: 3,
     country: 'United States',
     foundedIn: 1911,
-    newRecord: false,
+    newRecord: true,
     headquarters: 'Detroit, Michigan',
   },
   {

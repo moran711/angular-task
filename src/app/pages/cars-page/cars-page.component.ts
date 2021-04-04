@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { ICar } from '../../../constants/data.constants';
 import { CarsService } from '../../shared/cars.service';
 
@@ -7,12 +8,15 @@ import { CarsService } from '../../shared/cars.service';
   templateUrl: './cars-page.component.html',
   styleUrls: ['./cars-page.component.scss'],
 })
-export class CarsPageComponent implements OnInit {
+export class CarsPageComponent implements OnInit, OnDestroy {
   isChecked = false;
   cars: ICar[] = [];
+  getAllCarsSubscription: Subscription | null = null;
   constructor(private carsService: CarsService) {}
-
-  async ngOnInit() {
-    this.carsService.getAllCars().subscribe((cars) => (this.cars = cars));
+  ngOnDestroy(): void {
+    this.getAllCarsSubscription?.unsubscribe();
+  }
+ ngOnInit(): void {
+    this.getAllCarsSubscription = this.carsService.getAllCars().subscribe((cars) => (this.cars = cars));
   }
 }
