@@ -1,0 +1,64 @@
+<h1 mat-dialog-title>{{ data.isEdit ? 'Edit dealer' : 'Add dealer' }}</h1>
+<div mat-dialog-content>
+  <form [formGroup]="dealersForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Enter dealer id</mat-label>
+      <input
+        matInput
+        #input
+        placeholder="Id"
+        formControlName="id"
+        (ngModelChange)="onIdChange($event)"
+        required
+      />
+      <mat-error *ngIf="dealersForm.controls['id'].invalid">{{
+        getErrorMessage()
+      }}</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter dealers name</mat-label>
+      <input
+        matInput
+        #input
+        placeholder="Name"
+        formControlName="name"
+        required
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter dealers headquarters</mat-label>
+      <input
+        matInput
+        #input
+        placeholder="Headquarters"
+        formControlName="headquarters"
+      />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter dealers country</mat-label>
+      <input matInput #input placeholder="Country" formControlName="country" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Enter time when dealer founded in</mat-label>
+      <input
+        matInput
+        #input
+        placeholder="Founded in"
+        formControlName="foundedIn"
+      />
+    </mat-form-field>
+    <div mat-dialog-actions>
+      <button
+        mat-button
+        type="submit"
+        [disabled]="dealersForm.invalid"
+        [mat-dialog-close]="true"
+      >
+        Save
+      </button>
+      <button mat-button cdkFocusInitial [mat-dialog-close]="false">
+        Cansel
+      </button>
+    </div>
+  </form>
+</div>

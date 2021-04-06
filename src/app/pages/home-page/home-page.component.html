@@ -1,26 +1,29 @@
 <div class="page-container" *ngIf="!loading; else loadingBlock">
   <section class="liked-cars">
-    <h1 class="column-header">
-      Cars I Like
-    </h1>
+    <h1 class="column-header">Cars I Like</h1>
     <div class="list-container">
-      <app-home-car-card *ngFor="let car of likedCars" [car]="car"></app-home-car-card>
+      <app-home-car-card
+        *ngFor="let car of likedCars"
+        [car]="car"
+      ></app-home-car-card>
     </div>
   </section>
   <section class="newly-added-cars">
-    <h1 class="column-header">
-      My Cars
-    </h1>
+    <h1 class="column-header">My Cars</h1>
     <div class="list-container">
-      <app-home-car-card *ngFor="let car of newlyAddedCars" [car]="car"></app-home-car-card>
+      <app-home-car-card
+        *ngFor="let car of newlyAddedCars"
+        [car]="car"
+      ></app-home-car-card>
     </div>
   </section>
   <section class="newly-added-dealers">
-    <h1 class="column-header">
-      My Dealers
-    </h1>
+    <h1 class="column-header">My Dealers</h1>
     <div class="list-container">
-      <app-home-dealer-card  *ngFor="let dealer of newlyAddedDealers" [dealer]="dealer"></app-home-dealer-card>
+      <app-home-dealer-card
+        *ngFor="let dealer of newlyAddedDealers"
+        [dealer]="dealer"
+      ></app-home-dealer-card>
     </div>
   </section>
 </div>

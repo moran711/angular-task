@@ -4,13 +4,11 @@ import { ICar } from 'src/constants/data.constants';
 @Component({
   selector: 'app-home-car-card',
   templateUrl: './home-car-card.component.html',
-  styleUrls: ['./home-car-card.component.scss']
+  styleUrls: ['./home-car-card.component.scss'],
 })
 export class HomeCarCardComponent implements OnInit {
   @Input() car: ICar | null;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

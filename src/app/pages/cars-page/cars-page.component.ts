@@ -16,7 +16,9 @@ export class CarsPageComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.getAllCarsSubscription?.unsubscribe();
   }
- ngOnInit(): void {
-    this.getAllCarsSubscription = this.carsService.getAllCars().subscribe((cars) => (this.cars = cars));
+  ngOnInit(): void {
+    this.getAllCarsSubscription = this.carsService
+      .getAllCars()
+      .subscribe((cars) => (this.cars = cars));
   }
 }

@@ -30,7 +30,14 @@ import { MatInputModule } from '@angular/material/input';
 import { CarCardComponent } from './components/car-card/car-card.component';
 import { HomeCarCardComponent } from './components/home-car-card/home-car-card.component';
 import { HomeDealerCardComponent } from './components/home-dealer-card/home-dealer-card.component';
-import {MatDividerModule} from '@angular/material/divider';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTableModule } from '@angular/material/table';
+import { DealersTableComponent } from './components/dealers-table/dealers-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { ConfirmationPopUpComponent } from './components/confirmation-pop-up/confirmation-pop-up.component';
+import { DealerFormComponent } from './components/dealer-form/dealer-form.component';
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +52,9 @@ import {MatDividerModule} from '@angular/material/divider';
     CarCardComponent,
     HomeCarCardComponent,
     HomeDealerCardComponent,
+    DealersTableComponent,
+    ConfirmationPopUpComponent,
+    DealerFormComponent,
   ],
   imports: [
     BrowserModule,
@@ -65,6 +75,10 @@ import {MatDividerModule} from '@angular/material/divider';
     ReactiveFormsModule,
     MatDividerModule,
     MatInputModule,
+    MatTableModule,
+    MatDialogModule,
+    MatPaginatorModule,
+    MatSortModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
     }),

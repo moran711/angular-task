@@ -15,7 +15,7 @@ export class CarCardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
   ngOnDestroy(): void {
-    this.updateCarSubscription?.unsubscribe()
+    this.updateCarSubscription?.unsubscribe();
   }
   toggleLike(car: ICar): void {
     this.carsService
