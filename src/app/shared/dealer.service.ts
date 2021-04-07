@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
+
 import { IDealer } from 'src/constants/data.constants';
 
 @Injectable({
@@ -27,7 +28,8 @@ export class DealerService {
 
     return this.http.delete<IDealer>(url);
   }
-  updateDealer(dealer: IDealer): Observable<null> {
+  updateDealer(dealer: IDealer, oldId?: string): Observable<null> {
+    this.deleteDealer(oldId).subscribe();
     return this.http.put<null>(this.reqUri, dealer);
   }
   addDealer(dealer: IDealer): Observable<IDealer> {

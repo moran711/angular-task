@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import config from '../../../constants';
 import { IMenuItem } from '../../../constants/menu-items.constants';
 

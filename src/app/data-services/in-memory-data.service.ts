@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { InMemoryDbService } from 'angular-in-memory-web-api';
+
 import { CARS, DEALERS, ICar, IDealer } from '../../constants/data.constants';
 
 interface IMemoryDB {

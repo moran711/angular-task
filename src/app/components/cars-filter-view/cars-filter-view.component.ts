@@ -1,7 +1,7 @@
-import { ThisReceiver } from '@angular/compiler';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
 import { CarsService } from 'src/app/shared/cars.service';
 import { ICar } from 'src/constants/data.constants';
 
@@ -34,14 +34,14 @@ export class CarsFilterViewComponent implements OnInit, OnDestroy {
         }),
     );
   }
-  filterOnChange(searchString: string) {
+  filterOnChange(searchString: string): void {
     this.getCars(searchString);
   }
-  loadMoreCars() {
+  loadMoreCars(): void {
     this.limit += 12;
     this.getCars(this.filter.value);
   }
-  clearInput() {
+  clearInput(): void {
     this.filter.setValue('');
   }
 }

@@ -22,5 +22,20 @@
       Add dealer
     </button>
   </div>
-  <app-dealers-table [searchString]="searchString"></app-dealers-table>
+
+  <app-dealers-table
+    [dealers]="dealers"
+    (triggerDownloadEvent)="getDealers(null, searchString)"
+    [style.display]="!loading ? 'block' : 'none'"
+  ></app-dealers-table>
+  <mat-paginator
+    *ngIf="showPaginator; else noPagination"
+    [length]="length"
+    [pageSize]="paginatorConfig.pageSize"
+    (page)="getDealers($event)"
+    [pageSizeOptions]="paginatorConfig.pageSizeOptions"
+    showFirstLastButtons="false"
+  >
+  </mat-paginator>
+  <ng-template #noPagination></ng-template>
 </div>

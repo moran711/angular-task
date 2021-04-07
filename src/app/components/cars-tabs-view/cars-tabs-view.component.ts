@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CarsService } from '../../shared/cars.service';
-import { ICar } from '../../../constants/data.constants';
 import { Subscription } from 'rxjs';
 import { MatTabChangeEvent } from '@angular/material/tabs';
-import { ThrowStmt } from '@angular/compiler';
+
+import { CarsService } from '../../shared/cars.service';
+import { ICar } from '../../../constants/data.constants';
 
 @Component({
   selector: 'app-cars-tabs-view',
@@ -39,7 +39,7 @@ export class CarsTabsViewComponent implements OnInit, OnDestroy {
     );
   }
 
-  checkCategoriesIsEmpty() {
+  checkCategoriesIsEmpty(): boolean {
     for (var prop in this.carsByCategories) {
       if (this.carsByCategories.hasOwnProperty(prop)) return false;
     }

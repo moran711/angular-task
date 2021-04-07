@@ -3,14 +3,7 @@
   <form [formGroup]="dealersForm" (ngSubmit)="onSubmit()">
     <mat-form-field appearance="fill">
       <mat-label>Enter dealer id</mat-label>
-      <input
-        matInput
-        #input
-        placeholder="Id"
-        formControlName="id"
-        (ngModelChange)="onIdChange($event)"
-        required
-      />
+      <input matInput #input placeholder="Id" formControlName="id" required />
       <mat-error *ngIf="dealersForm.controls['id'].invalid">{{
         getErrorMessage()
       }}</mat-error>
@@ -48,12 +41,7 @@
       />
     </mat-form-field>
     <div mat-dialog-actions>
-      <button
-        mat-button
-        type="submit"
-        [disabled]="dealersForm.invalid"
-        [mat-dialog-close]="true"
-      >
+      <button mat-button type="submit" [disabled]="dealersForm.invalid">
         Save
       </button>
       <button mat-button cdkFocusInitial [mat-dialog-close]="false">

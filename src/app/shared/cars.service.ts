@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ICar } from '../../constants/data.constants';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+
+import { ICar } from '../../constants/data.constants';
 
 @Injectable({
   providedIn: 'root',

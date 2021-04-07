@@ -1,18 +1,10 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { DealerService } from 'src/app/shared/dealer.service';
-import { IDealer } from 'src/constants/data.constants';
 
-interface IDialogData {
-  isEdit: boolean;
-  dealer?: IDealer;
-}
+import { DealerService } from 'src/app/shared/dealer.service';
 
 @Component({
   selector: 'app-dealer-form',
@@ -59,42 +51,74 @@ export class DealerFormComponent implements OnInit, OnDestroy {
     } = this.dealersForm.value;
     const newRecord = true;
     const amountOfCars = 0;
-    this.subscriptions.push(
-      this.data.isEdit
-        ? this.dealerService
-            .updateDealer({
-              id,
-              name,
-              headquarters,
-              country,
-              foundedIn,
-              newRecord,
-              amountOfCars,
-            })
-            .subscribe()
-        : this.dealerService
-            .addDealer({
-              id,
-              name,
-              headquarters,
-              country,
-              foundedIn,
-              newRecord,
-              createdAt: Date.now(),
-              amountOfCars,
-            })
-            .subscribe(),
-    );
-  }
-  onIdChange(id) {
-    if (id === this.data?.dealer?.id) return;
     this.dealerService.getDealerById(id).subscribe(
       (dealer) => {
-        dealer
-          ? this.dealersForm.controls['id'].setErrors({ incorrect: true })
-          : null;
+        if (!dealer || this.data?.dealer?.id === dealer?.id) {
+          this.subscriptions.push(
+            this.data?.isEdit
+              ? this.dealerService
+                  .updateDealer({
+                    id,
+                    name,
+                    headquarters,
+                    country,
+                    foundedIn,
+                    newRecord,
+                    amountOfCars,
+                  })
+                  .subscribe()
+              : this.dealerService
+                  .addDealer({
+                    id,
+                    name,
+                    headquarters,
+                    country,
+                    foundedIn,
+                    newRecord,
+                    createdAt: Date.now(),
+                    amountOfCars,
+                  })
+                  .subscribe(),
+          );
+          this.dialogRef.close(true);
+          return;
+        }
+        this.dealersForm.controls['id'].setValue('');
+        this.dealersForm.controls['id'].setErrors({ incorrect: true });
       },
-      (e) => {},
+      (e) => {
+        this.subscriptions.push(
+          this.data?.isEdit
+            ? this.dealerService
+                .updateDealer(
+                  {
+                    id,
+                    name,
+                    headquarters,
+                    country,
+                    foundedIn,
+                    newRecord,
+                    amountOfCars,
+                  },
+                  this.data?.dealer?.id,
+                )
+                .subscribe()
+            : this.dealerService
+                .addDealer({
+                  id,
+                  name,
+                  headquarters,
+                  country,
+                  foundedIn,
+                  newRecord,
+                  createdAt: Date.now(),
+                  amountOfCars,
+                })
+                .subscribe(),
+        );
+        this.dialogRef.close(true);
+        return;
+      },
     );
   }
   onNoClick(): void {
@@ -104,7 +128,7 @@ export class DealerFormComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
-  getErrorMessage() {
+  getErrorMessage(): void | string {
     if (this.dealersForm.controls['id'].hasError('incorrect')) {
       return 'Id is already taken';
     }

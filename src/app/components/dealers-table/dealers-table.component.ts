@@ -1,13 +1,17 @@
-import { stringify } from '@angular/compiler/src/util';
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { PageEvent } from '@angular/material/paginator';
-import { MatSort, MatSortable } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { Subscription } from 'rxjs';
+
 import { DealerService } from 'src/app/shared/dealer.service';
-import { IDealer } from 'src/constants/data.constants';
 import { ConfirmationPopUpComponent } from '../confirmation-pop-up/confirmation-pop-up.component';
 import { DealerFormComponent } from '../dealer-form/dealer-form.component';
 
@@ -18,14 +22,6 @@ import { DealerFormComponent } from '../dealer-form/dealer-form.component';
 })
 export class DealersTableComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  loading: boolean = false;
-  dealers;
-  skip: number = 0;
-  limit: number = 10;
-  @Input() set searchString(value: string) {
-    this.getDealers(null, value);
-  }
-  showPaginator: boolean = false;
   displayedColumns: string[] = [
     'name',
     'amountOfCars',
@@ -34,46 +30,20 @@ export class DealersTableComponent implements OnInit, OnDestroy {
     'foundedIn',
     'actions',
   ];
-  length: number = 0;
-  paginatorConfig = {
-    pageSize: 10,
-    pageSizeOptions: [5, 10, 25, 100],
-  };
+  @ViewChild(MatSort) sort: MatSort;
+  @Input() dealers;
+  @Output() triggerDownloadEvent = new EventEmitter<string>();
   constructor(private dealerService: DealerService, public dialog: MatDialog) {}
 
-  @ViewChild(MatSort) sort: MatSort;
-
-  ngOnInit(): void {
-    this.getDealers();
+  ngOnInit(): void {}
+  ngOnChanges() {
+    this.dealers ? (this.dealers.sort = this.sort) : null;
   }
-  filterOnChange(searchString: string) {
-    this.getDealers(null, searchString);
+  getDealers(): void {
+    this.triggerDownloadEvent.emit();
   }
-  getDealers(event?: PageEvent, searchString?: string) {
-    this.loading = true;
-    if (event) {
-      this.skip = event?.pageSize * event?.pageIndex;
-      this.limit = event?.pageSize;
-    }
 
-    this.subscriptions.push(
-      this.dealerService
-        .getAllDealers(searchString?.trim() ? { name: searchString } : null)
-        .subscribe((dealers) => {
-          event ? null : (this.length = dealers.length);
-          dealers.length < 6
-            ? (this.showPaginator = false)
-            : (this.showPaginator = true);
-          this.dealers = new MatTableDataSource(
-            dealers.splice(this.skip, this.limit),
-          );
-          this.dealers.sort = this.sort;
-
-          this.loading = false;
-        }),
-    );
-  }
-  openDeleteDialog(id: string) {
+  openDeleteDialog(id: string): void {
     const dialogRef = this.dialog.open(ConfirmationPopUpComponent, {
       data: { dealerId: id },
     });
@@ -82,21 +52,26 @@ export class DealersTableComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed().subscribe((result) => {
         if (typeof result === 'string') {
           this.deleteDealer(result);
-          this.getDealers(null, this.searchString);
+          this.getDealers();
         }
       }),
     );
   }
-  deleteDealer(id: string) {
+  deleteDealer(id: string): void {
     this.subscriptions.push(this.dealerService.deleteDealer(id).subscribe());
   }
-  openUpdateDealerDialog(dealer) {
-    this.dialog.open(DealerFormComponent, {
+  openUpdateDealerDialog(dealer): void {
+    const dialogRef = this.dialog.open(DealerFormComponent, {
       data: {
         isEdit: true,
         dealer,
       },
     });
+    this.subscriptions.push(
+      dialogRef.afterClosed().subscribe((result) => {
+        result ? this.getDealers() : null;
+      }),
+    );
   }
   ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub?.unsubscribe);

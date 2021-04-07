@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+
 import { ICar } from 'src/constants/data.constants';
 
 @Component({

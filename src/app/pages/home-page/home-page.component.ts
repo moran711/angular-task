@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { CarsService } from 'src/app/shared/cars.service';
 import { DealerService } from 'src/app/shared/dealer.service';
 import { ICar, IDealer } from 'src/constants/data.constants';
@@ -42,7 +43,7 @@ export class HomePageComponent implements OnInit, OnDestroy {
         }),
     );
   }
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subscriptions.forEach((sub) => sub.unsubscribe());
   }
 }

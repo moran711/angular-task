@@ -1,66 +1,49 @@
-<section class="table-container" [style.display]="!loading ? 'block' : 'none'">
-  <table mat-table matSort [dataSource]="dealers" class="mat-elevation-z8">
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
-    </ng-container>
+<table mat-table matSort [dataSource]="dealers" class="mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="amountOfCars">
-      <th mat-header-cell *matHeaderCellDef>Amount of cars</th>
-      <td mat-cell *matCellDef="let element">{{ element.amountOfCars }}</td>
-    </ng-container>
+  <ng-container matColumnDef="amountOfCars">
+    <th mat-header-cell *matHeaderCellDef>Amount of cars</th>
+    <td mat-cell *matCellDef="let element">{{ element.amountOfCars }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="headquarters">
-      <th mat-header-cell *matHeaderCellDef>Headquarters</th>
-      <td mat-cell *matCellDef="let element">{{ element.headquarters }}</td>
-    </ng-container>
+  <ng-container matColumnDef="headquarters">
+    <th mat-header-cell *matHeaderCellDef>Headquarters</th>
+    <td mat-cell *matCellDef="let element">{{ element.headquarters }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="country">
-      <th mat-header-cell *matHeaderCellDef>Country</th>
-      <td mat-cell *matCellDef="let element">{{ element.country }}</td>
-    </ng-container>
+  <ng-container matColumnDef="country">
+    <th mat-header-cell *matHeaderCellDef>Country</th>
+    <td mat-cell *matCellDef="let element">{{ element.country }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="foundedIn">
-      <th mat-header-cell *matHeaderCellDef>Founded in</th>
-      <td mat-cell *matCellDef="let element">{{ element.foundedIn }}</td>
-    </ng-container>
+  <ng-container matColumnDef="foundedIn">
+    <th mat-header-cell *matHeaderCellDef>Founded in</th>
+    <td mat-cell *matCellDef="let element">{{ element.foundedIn }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let element">
-        <mat-icon
-          aria-hidden="false"
-          class="edit-dealer"
-          (click)="openUpdateDealerDialog(element)"
-          aria-label="Edit dealer"
-          >edit</mat-icon
-        >
-        <mat-icon
-          aria-hidden="false"
-          class="delete-dealer"
-          aria-label="Delete dealer"
-          (click)="openDeleteDialog(element?.id)"
-          >delete</mat-icon
-        >
-      </td>
-    </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>
+    <td mat-cell *matCellDef="let element">
+      <mat-icon
+        aria-hidden="false"
+        class="edit-dealer"
+        (click)="openUpdateDealerDialog(element)"
+        aria-label="Edit dealer"
+        >edit</mat-icon
+      >
+      <mat-icon
+        aria-hidden="false"
+        class="delete-dealer"
+        aria-label="Delete dealer"
+        (click)="openDeleteDialog(element?.id)"
+        >delete</mat-icon
+      >
+    </td>
+  </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <mat-paginator
-    *ngIf="showPaginator; else noPagination"
-    [length]="length"
-    [pageSize]="paginatorConfig.pageSize"
-    (page)="getDealers($event)"
-    [pageSizeOptions]="paginatorConfig.pageSizeOptions"
-    showFirstLastButtons="false"
-  >
-  </mat-paginator>
-</section>
-<ng-template #noPagination></ng-template>
-
-<mat-progress-bar
-  mode="indeterminate"
-  [style.display]="loading ? 'block' : 'none'"
-></mat-progress-bar>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
