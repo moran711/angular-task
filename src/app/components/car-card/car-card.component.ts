@@ -2,7 +2,10 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { CarsService } from 'src/app/shared/cars.service';
+import config from 'src/constants';
 import { ICar } from 'src/constants/data.constants';
+
+const { images } = config;
 
 @Component({
   selector: 'app-car-card',
@@ -12,6 +15,7 @@ import { ICar } from 'src/constants/data.constants';
 export class CarCardComponent implements OnInit, OnDestroy {
   @Input() car: ICar | null;
   updateCarSubscription: Subscription | null = null;
+  defaultImg: string = images.defaultImg;
   constructor(private carsService: CarsService) {}
 
   ngOnInit(): void {}

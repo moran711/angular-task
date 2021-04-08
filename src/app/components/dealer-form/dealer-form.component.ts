@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -51,78 +50,47 @@ export class DealerFormComponent implements OnInit, OnDestroy {
     } = this.dealersForm.value;
     const newRecord = true;
     const amountOfCars = 0;
-    this.dealerService.getDealerById(id).subscribe(
-      (dealer) => {
-        if (!dealer || this.data?.dealer?.id === dealer?.id) {
-          this.subscriptions.push(
-            this.data?.isEdit
-              ? this.dealerService
-                  .updateDealer({
-                    id,
-                    name,
-                    headquarters,
-                    country,
-                    foundedIn,
-                    newRecord,
-                    amountOfCars,
-                  })
-                  .subscribe()
-              : this.dealerService
-                  .addDealer({
-                    id,
-                    name,
-                    headquarters,
-                    country,
-                    foundedIn,
-                    newRecord,
-                    createdAt: Date.now(),
-                    amountOfCars,
-                  })
-                  .subscribe(),
-          );
-          this.dialogRef.close(true);
-          return;
-        }
-        this.dealersForm.controls['id'].setValue('');
-        this.dealersForm.controls['id'].setErrors({ incorrect: true });
-      },
-      (e) => {
-        this.subscriptions.push(
-          this.data?.isEdit
-            ? this.dealerService
-                .updateDealer(
-                  {
-                    id,
-                    name,
-                    headquarters,
-                    country,
-                    foundedIn,
-                    newRecord,
-                    amountOfCars,
-                  },
-                  this.data?.dealer?.id,
-                )
-                .subscribe()
-            : this.dealerService
-                .addDealer({
-                  id,
-                  name,
-                  headquarters,
-                  country,
-                  foundedIn,
-                  newRecord,
-                  createdAt: Date.now(),
-                  amountOfCars,
-                })
-                .subscribe(),
-        );
-        this.dialogRef.close(true);
-        return;
-      },
+    this.subscriptions.push(
+      this.data.isEdit
+        ? this.dealerService
+            .updateDealer({
+              id,
+              name,
+              headquarters,
+              country,
+              foundedIn,
+              newRecord,
+              amountOfCars,
+            })
+            .subscribe()
+        : this.dealerService
+            .addDealer({
+              id,
+              name,
+              headquarters,
+              country,
+              foundedIn,
+              newRecord,
+              createdAt: Date.now(),
+              amountOfCars,
+            })
+            .subscribe(),
     );
   }
-  onNoClick(): void {
-    this.dialogRef.close();
+  onIdChange(id) {
+    if (id === this.data?.dealer?.id) return;
+    this.dealerService.getDealerById(id).subscribe(
+      (dealer) => {
+        if (this.data.isEdit && dealer?.id === this?.data?.dealer?.id) {
+          return;
+        }
+        if (dealer) {
+          this.dealersForm.controls['id'].setValue('');
+          this.dealersForm.controls['id'].setErrors({ incorrect: true });
+        }
+      },
+      (e) => {},
+    );
   }
   ngOnInit(): void {}
   ngOnDestroy(): void {

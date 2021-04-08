@@ -1,6 +1,6 @@
 <div class="car-container">
   <img
-    [src]="car?.image"
+    [src]="car?.image || defaultImg"
     [alt]="car?.model ? car?.model : 'Model not specified'"
   />
   <div class="car-info">

@@ -5,5 +5,5 @@
       <mat-card-subtitle>{{ car.brand }}</mat-card-subtitle>
     </div>
   </mat-card-header>
-  <img mat-card-image [src]="car?.image" [alt]="car.model" />
+  <img mat-card-image [src]="car?.image || defaultImg" [alt]="car.model" />
 </mat-card>

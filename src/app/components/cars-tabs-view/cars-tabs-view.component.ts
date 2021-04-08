@@ -34,7 +34,7 @@ export class CarsTabsViewComponent implements OnInit, OnDestroy {
     this.getAllCarsSubscription?.unsubscribe();
   }
   setSelectedCar(category: string, id: string): void {
-    this.selectedCar = this.carsByCategories[category].find(
+    this.selectedCar = this.carsByCategories[category || 'Other'].find(
       (car) => car.id === id,
     );
   }
@@ -53,7 +53,9 @@ export class CarsTabsViewComponent implements OnInit, OnDestroy {
         ? acc[car.category]
           ? acc[car.category].push(car)
           : (acc[car.category] = [car])
-        : null;
+        : acc['Other']
+        ? acc['Other'].push(car)
+        : (acc['Other'] = [car]);
       return acc;
     }, {});
   }

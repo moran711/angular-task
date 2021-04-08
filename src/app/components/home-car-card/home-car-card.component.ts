@@ -1,6 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import config from 'src/constants';
 import { ICar } from 'src/constants/data.constants';
+
+const { images } = config;
 
 @Component({
   selector: 'app-home-car-card',
@@ -9,6 +12,7 @@ import { ICar } from 'src/constants/data.constants';
 })
 export class HomeCarCardComponent implements OnInit {
   @Input() car: ICar | null;
+  defaultImg: string = images.defaultImg;
   constructor() {}
 
   ngOnInit(): void {}

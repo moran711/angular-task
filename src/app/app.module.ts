@@ -26,7 +26,6 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { CarsPageComponent } from './pages/cars-page/cars-page.component';
 import { DealersPageComponent } from './pages/dealers-page/dealers-page.component';
 import { HeaderComponent } from './components/header/header.component';
 import { SidenavComponent } from './components/sidenav/sidenav.component';
@@ -40,24 +39,16 @@ import { HomeDealerCardComponent } from './components/home-dealer-card/home-deal
 import { DealersTableComponent } from './components/dealers-table/dealers-table.component';
 import { ConfirmationPopUpComponent } from './components/confirmation-pop-up/confirmation-pop-up.component';
 import { DealerFormComponent } from './components/dealer-form/dealer-form.component';
+import { CarsPageModule } from './pages/cars-page/cars-page.module';
+import { DealersPageModule } from './pages/dealers-page/dealers-page.module';
+import { HomePageModule } from './pages/home-page/home-page.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomePageComponent,
-    CarsPageComponent,
-    DealersPageComponent,
     HeaderComponent,
     SidenavComponent,
-    CarsFilterViewComponent,
-    CarsTabsViewComponent,
-    CarInfoComponent,
-    CarCardComponent,
-    HomeCarCardComponent,
-    HomeDealerCardComponent,
-    DealersTableComponent,
     ConfirmationPopUpComponent,
-    DealerFormComponent,
   ],
   imports: [
     //Vendor
@@ -65,27 +56,18 @@ import { DealerFormComponent } from './components/dealer-form/dealer-form.compon
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule,
-    FormsModule,
+
     //Material
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
-    MatTabsModule,
-    MatSlideToggleModule,
     MatIconModule,
-    MatButtonModule,
-    MatCardModule,
-    MatProgressBarModule,
-    MatFormFieldModule,
-    MatDividerModule,
-    MatInputModule,
-    MatTableModule,
     MatDialogModule,
-    MatPaginatorModule,
-    MatSortModule,
 
     //Local
+    DealersPageModule,
+    CarsPageModule,
+    HomePageModule,
     HttpClientInMemoryWebApiModule.forRoot(InMemoryDataService, {
       dataEncapsulation: false,
     }),
