@@ -25,9 +25,11 @@
 
   <app-dealers-table
     [dealers]="dealers"
+    [displayedColumns]="displayedColumns"
     (triggerDownloadEvent)="getDealers(null, searchString)"
     [style.display]="!loading ? 'block' : 'none'"
   ></app-dealers-table>
+
   <mat-paginator
     *ngIf="showPaginator; else noPagination"
     [length]="length"

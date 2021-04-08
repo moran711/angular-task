@@ -22,14 +22,7 @@ import { DealerFormComponent } from '../dealer-form/dealer-form.component';
 })
 export class DealersTableComponent implements OnInit, OnDestroy {
   subscriptions: Subscription[] = [];
-  displayedColumns: string[] = [
-    'name',
-    'amountOfCars',
-    'headquarters',
-    'country',
-    'foundedIn',
-    'actions',
-  ];
+  @Input() displayedColumns: string[];
   @ViewChild(MatSort) sort: MatSort;
   @Input() dealers;
   @Output() triggerDownloadEvent = new EventEmitter<string>();

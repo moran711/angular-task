@@ -16,6 +16,14 @@ import { DealerService } from 'src/app/shared/dealer.service';
 export class DealersPageComponent implements OnInit {
   subscriptions: Subscription[] = [];
   loading: boolean = false;
+  displayedColumns: string[] = [
+    'name',
+    'amountOfCars',
+    'headquarters',
+    'country',
+    'foundedIn',
+    'actions',
+  ];
   filter: FormControl = new FormControl('');
   searchString: string = '';
   skip: number = 0;
@@ -43,19 +51,36 @@ export class DealersPageComponent implements OnInit {
     }
 
     this.subscriptions.push(
-      this.dealerService
-        .getAllDealers(searchString?.trim() ? { name: searchString } : null)
-        .subscribe((dealers) => {
-          event ? null : (this.length = dealers.length);
-          dealers.length < 6
-            ? (this.showPaginator = false)
-            : (this.showPaginator = true);
-          this.dealers = new MatTableDataSource(
-            dealers.splice(this.skip, this.limit),
-          );
+      this.dealerService.getAllDealers(null, 5000).subscribe((dealers) => {
+        dealers = searchString?.trim()
+          ? dealers.filter(
+              (dealer) =>
+                this.displayedColumns
+                  .filter((el) => el !== 'action')
+                  .map((column) => {
+                    return typeof dealer[column] === 'number'
+                      ? dealer[column]
+                          .toString()
+                          .includes(searchString.toLowerCase())
+                      : typeof dealer[column] === 'string'
+                      ? dealer[column]
+                          .toLowerCase()
+                          .includes(searchString.toLowerCase())
+                      : false;
+                  })
+                  .filter((el) => el).length,
+            )
+          : dealers;
+        event ? null : (this.length = dealers.length);
+        dealers.length < 6
+          ? (this.showPaginator = false)
+          : (this.showPaginator = true);
+        this.dealers = new MatTableDataSource(
+          dealers.splice(this.skip, this.limit),
+        );
 
-          this.loading = false;
-        }),
+        this.loading = false;
+      }),
     );
   }
 

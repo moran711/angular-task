@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { distinctUntilChanged, map, debounceTime } from 'rxjs/operators';
 
 import { IDealer } from 'src/constants/data.constants';
 
@@ -11,10 +11,11 @@ import { IDealer } from 'src/constants/data.constants';
 export class DealerService {
   reqUri: string = 'http://localhost:4200/api/dealers';
   constructor(private http: HttpClient) {}
-  getAllDealers(options = {}): Observable<IDealer[]> {
+  getAllDealers(options = {}, debounce?: number): Observable<IDealer[]> {
     return this.http
       .get<IDealer[]>(this.reqUri, { params: options })
       .pipe(
+        debounceTime(debounce),
         map((dealer) => {
           if (!dealer) {
             return [];
@@ -35,7 +36,9 @@ export class DealerService {
   addDealer(dealer: IDealer): Observable<IDealer> {
     return this.http.post<IDealer>(this.reqUri, dealer);
   }
-  getDealerById(id: string) {
-    return this.http.get<IDealer>(`${this.reqUri}/${id}`);
+  getDealerById(id: string, debounce?: number) {
+    return this.http
+      .get<IDealer>(`${this.reqUri}/${id}`)
+      .pipe(debounceTime(debounce), distinctUntilChanged());
   }
 }

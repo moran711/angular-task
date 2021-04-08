@@ -79,7 +79,7 @@ export class DealerFormComponent implements OnInit, OnDestroy {
   }
   onIdChange(id) {
     if (id === this.data?.dealer?.id) return;
-    this.dealerService.getDealerById(id).subscribe(
+    this.dealerService.getDealerById(id, 300).subscribe(
       (dealer) => {
         if (this.data.isEdit && dealer?.id === this?.data?.dealer?.id) {
           return;

@@ -443,7 +443,7 @@ export const DEALERS: IDealer[] = [
   {
     id: 'PAGANI',
     name: 'Pagani',
-    amountOfCars: 1,
+    amountOfCars: 10000,
     country: 'Italy',
     foundedIn: 1992,
     newRecord: false,

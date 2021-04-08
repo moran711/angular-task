@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 
 import { ICar } from '../../constants/data.constants';
 
@@ -11,10 +11,11 @@ import { ICar } from '../../constants/data.constants';
 export class CarsService {
   reqUri: string = 'http://localhost:4200/api/cars';
   constructor(private http: HttpClient) {}
-  getAllCars(filterOptions?: any): Observable<ICar[]> {
+  getAllCars(filterOptions?: any, debounce?: number): Observable<ICar[]> {
     return this.http
       .get<ICar[]>(this.reqUri, { params: filterOptions })
       .pipe(
+        debounceTime(debounce),
         map((car) => {
           if (!car) {
             return [];
