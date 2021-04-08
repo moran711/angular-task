@@ -26,12 +26,20 @@ export class CarsFilterViewComponent implements OnInit, OnDestroy {
   }
   getCars(searchString) {
     this.getAllCarsSubscriptions.push(
-      this.carsService
-        .getAllCars({ model: searchString, brand: searchString })
-        .subscribe((cars) => {
-          this.cars = cars.slice(0, this.limit);
-          this.loading = false;
-        }),
+      this.carsService.getAllCars().subscribe((cars) => {
+        this.cars = searchString?.trim()
+          ? cars
+              .filter(
+                (car) =>
+                  car.model
+                    .toLowerCase()
+                    .includes(searchString.toLowerCase()) ||
+                  car.brand.toLowerCase().includes(searchString.toLowerCase()),
+              )
+              .slice(0, this.limit)
+          : cars.slice(0, this.limit);
+        this.loading = false;
+      }),
     );
   }
   filterOnChange(searchString: string): void {
